@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const ctrl = require('../controllers/costing.controller');
+const { requirePermission } = require('../middleware/auth');
+router.get('/template', requirePermission('costing:read'), ctrl.template);
+router.get('/', requirePermission('costing:read'), ctrl.listCostings);
+router.post('/floor-balance', requirePermission('costing:write'), ctrl.saveFloorBalance);
+router.post('/generate', requirePermission('costing:write'), ctrl.generateCosting);
+router.get('/:id/pdf', requirePermission('costing:read'), ctrl.downloadPdf);
+router.get('/:id/excel', requirePermission('costing:read'), ctrl.downloadExcel);
+router.get('/:id', requirePermission('costing:read'), ctrl.getCosting);
+module.exports = router;

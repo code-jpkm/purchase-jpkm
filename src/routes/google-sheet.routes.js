@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const ctrl = require('../controllers/google-sheet.controller');
+const { requireRole } = require('../middleware/auth');
+router.use(requireRole('admin', 'super_admin'));
+router.get('/sections', ctrl.listSections);
+router.post('/preview', ctrl.preview);
+router.post('/import', ctrl.importFromGoogleSheet);
+router.get('/history', ctrl.history);
+module.exports = router;

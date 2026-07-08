@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+const ctrl = require('../controllers/ai.controller');
+const { requirePermission } = require('../middleware/auth');
+router.get('/conversations', requirePermission('ai:use'), ctrl.listConversations);
+router.get('/conversations/:id', requirePermission('ai:use'), ctrl.getConversation);
+router.delete('/conversations/:id', requirePermission('ai:use'), ctrl.deleteConversation);
+router.post('/generate-po', requirePermission('ai:use'), ctrl.aiGeneratePO);
+router.post('/chat', requirePermission('ai:use'), ctrl.aiChat);
+module.exports = router;

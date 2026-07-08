@@ -1,0 +1,11 @@
+const express = require('express');
+const multer = require('multer');
+const ctrl = require('../controllers/import.controller');
+const { requireRole } = require('../middleware/auth');
+const router = express.Router();
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
+router.use(requireRole('admin', 'super_admin'));
+router.get('/sections', ctrl.listImportSections);
+router.get('/template', ctrl.downloadTemplate);
+router.post('/excel', upload.single('file'), ctrl.importExcel);
+module.exports = router;
